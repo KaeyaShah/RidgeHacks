@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Escape the Past - Race Game</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            overflow-x: hidden;
+        }
+
+        #counter {
+            font-size: 20px;
+            margin: 10px 0;
+        }
+
+        #question {
+            font-size: 24px;
+            margin: 20px 0;
+        }
+
+        .choices {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .choice {
+            padding: 15px 30px;
+            background-color: white;
+            color: black;
+            border-radius: 10px;
+            font-size: 20px;
+            cursor: pointer;
+            width: 200px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .choice:hover {
+            background-color: red;
+            color: white;
+        }
+
+        .race-track {
+            position: relative;
+            width: 90%;
+            height: 250px;
+            margin: 50px auto;
+            background: url('road.png') no-repeat center center;
+            background-size: cover;
+            border: 5px solid white;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .car {
+            width: 100px;
+            height: 50px;
+            position: absolute;
+            top: 20%;
+            transition: left 0.3s;
+        }
+
+        .car2 {
+            top: 65%;
+        }
+
+        #player1-car img, #player2-car img {
+            width: 100px;
+            height: 50px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Transportation People Race!</h1>
+
+    <div id="counter">Question 1 of 9</div> <!-- 🆕 Question counter added -->
+    <div id="question">Loading question...</div>
+
+    <div class="choices" id="choices">
+        <!-- Choices will go here -->
+    </div>
+
+    <div class="race-track">
+        <div id="player1-car" class="car"><img src="red-car-top-view-hi.png" alt="Player 1 Car"></div>
+        <div id="player2-car" class="car car2"><img src="download.png" alt="Player 2 Car"></div>
+    </div>
+
+    <h3>Player 1 keys: 1, 2, 3, 4</h3>
+    <h3>Player 2 keys: 7, 8, 9, 0</h3>
+
+    <script>
+        const questions = [
+            { question: "Who invented the first practical steam locomotive?", choices: ["George Stephenson", "Thomas Edison", "Henry Ford", "Alexander Graham Bell"], correct: "George Stephenson" },
+            { question: "Who mass-produced cars with the assembly line method?", choices: ["Karl Benz", "James Watt", "Henry Ford", "Eli Whitney"], correct: "Henry Ford" },
+            { question: "Who invented the first successful steamboat?", choices: ["Orville Wright", "Robert Fulton", "Nikola Tesla", "Leonardo da Vinci"], correct: "Robert Fulton" },
+            { question: "Who is known as the 'Father of the Railroad'?", choices: ["George Stephenson", "Cornelius Vanderbilt", "Andrew Carnegie", "James Watt"], correct: "George Stephenson" },
+            { question: "Which transportation company did Elon Musk found?", choices: ["Boeing", "Tesla", "Airbus", "Harley-Davidson"], correct: "Tesla" },
+            { question: "Who designed the Ford Model T?", choices: ["Ransom E. Olds", "Karl Benz", "Nikola Tesla", "Henry Ford"], correct: "Henry Ford" },
+            { question: "Who created the first working helicopter?", choices: ["Orville Wright", "Gottlieb Daimler", "Igor Sikorsky", "Ferdinand Porsche"], correct: "Igor Sikorsky" },
+            { question: "What did Charles Lindbergh make the first solo nonstop flight across?", choices: ["Pacific Ocean", "Atlantic Ocean", "English Channel", "Mediterranean Sea"], correct: "Atlantic Ocean" },
+            { question: "Who created the first successful jet engine?", choices: ["Elon Musk", "Robert Fulton", "Charles Rolls", "Frank Whittle"], correct: "Frank Whittle" }
+        ];
+    
+        let currentQuestion = 0;
+        let player1Score = 0;
+        let player2Score = 0;
+        let player1Position = 0;
+        let player2Position = 0;
+        const moveDistance = 100;
+    
+        const choiceKeysPlayer1 = ['1', '2', '3', '4'];
+        const choiceKeysPlayer2 = ['7', '8', '9', '0'];
+    
+        function loadQuestion() {
+            const q = questions[currentQuestion];
+            document.getElementById('question').textContent = q.question;
+            document.getElementById('counter').textContent = `Question ${currentQuestion + 1} of ${questions.length}`; // 🆕 Update counter
+            const choicesDiv = document.getElementById('choices');
+            choicesDiv.innerHTML = '';
+            q.choices.forEach((choice, index) => {
+                const div = document.createElement('div');
+                div.className = 'choice';
+                div.textContent = choice;
+                choicesDiv.appendChild(div);
+            });
+        }
+    
+        function moveCar(player) {
+            if (player === 'player1') {
+                player1Position += moveDistance;
+                document.getElementById('player1-car').style.left = player1Position + 'px';
+            } else {
+                player2Position += moveDistance;
+                document.getElementById('player2-car').style.left = player2Position + 'px';
+            }
+        }
+    
+        function handleAnswer(player, choiceIndex) {
+            const q = questions[currentQuestion];
+            const selectedAnswer = q.choices[choiceIndex];
+    
+            if (selectedAnswer === q.correct) {
+                if (player === 'player1') {
+                    player1Score++;
+                    moveCar('player1');
+                } else {
+                    player2Score++;
+                    moveCar('player2');
+                }
+    
+                currentQuestion++;
+                if (currentQuestion < questions.length) {
+                    loadQuestion();
+                } else {
+                    setTimeout(declareWinner, 500);
+                }
+            } else {
+                alert('Wrong Answer! Try again!');
+            }
+        }
+    
+        function declareWinner() {
+            if (player1Score > player2Score) {
+                document.body.innerHTML = `
+                    <h1 style="color: #00FF00;">Player 1 Escaped to the Present!</h1>
+                    <h2 style="color: red;">Player 2 is stuck in the past!</h2>
+                    <img src="red-car-top-view-hi.png" style="width: 300px;">
+                    <br><button><a href="home.html">Return to Home Screen</a></button>
+                `;
+            } else if (player2Score > player1Score) {
+                document.body.innerHTML = `
+                    <h1 style="color: #00FF00;">Player 2 Escaped to the Present!</h1>
+                    <h2 style="color: red;">Player 1 is stuck in the past!</h2>
+                    <img src="download.png" style="width: 300px;">
+                    <br><button><a href="home.html">Return to Home Screen</a></button>
+                `;
+            } else {
+                document.body.innerHTML = `
+                    <h1>It's a Tie!</h1>
+                    <p>Both players answered the same number correctly!</p>
+                    <br><button><a href="home.html">Return to Home Screen</a></button>
+                `;
+            }
+        }
+    
+        document.addEventListener('keydown', function(event) {
+            const key = event.key.toLowerCase();
+            if (choiceKeysPlayer1.includes(key)) {
+                const index = choiceKeysPlayer1.indexOf(key);
+                handleAnswer('player1', index);
+            } else if (choiceKeysPlayer2.includes(key)) {
+                const index = choiceKeysPlayer2.indexOf(key);
+                handleAnswer('player2', index);
+            }
+        });
+    
+        loadQuestion();
+    </script>
+
+</body>
+</html>
