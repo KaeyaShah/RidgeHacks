@@ -1,0 +1,43 @@
+body {
+    background-color: #0d0d0d; 
+    color: #ff4c4c; 
+    font-family: 'Poppins', sans-serif;
+}
+
+h1 {
+    font-size: 50px;
+    margin-top: 20px;
+}
+
+button {
+    background-color: #1a1a1a; 
+    color: #ff4c4c; 
+    outline: 2px solid #ff4c4c;
+    padding: 30px 90px;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    margin-top: 20px;
+    border-radius: 10px; 
+    transition: background-color 0.3s, color 0.3s;
+}
+
+button:hover {
+    background-color: #ff4c4c;
+    color: #0d0d0d;
+}
+button a {
+    text-decoration: none;
+    color: inherit; 
+}
+.race-track {
+    position: relative;
+    width: 90%;
+    height: 250px;
+    margin: 50px auto;
+    background: url('road.png') no-repeat center center;
+    background-size: cover;
+    border: 5px solid white;
+    border-radius: 10px;
+    overflow: hidden;
+}
