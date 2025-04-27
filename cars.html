@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Enter Players - Escape The Past</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            background-color: black;
+            color: white;
+        }
+        .player-container {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            margin-top: 40px;
+        }
+        .player {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .player1 h2 {
+            color: red;
+        }
+        .player2 h2 {
+            color: blue;
+        }
+        input[type="text"] {
+            padding: 10px;
+            font-size: 18px;
+            border-radius: 8px;
+            border: 2px solid white;
+            background-color: black;
+            color: white;
+            width: 200px;
+            text-align: center;
+        }
+        button {
+            margin-top: 40px;
+            padding: 12px 24px;
+            font-size: 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            border: none;
+            background-color: white;
+            color: black;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        button:hover {
+            background-color: red;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>Enter Player Information</h1>
+    <form action="ChooseTrivia.html" method="GET">
+        <div class="player-container">
+            <div class="player player1">
+                <h2>Player 1</h2>
+                <input type="text" name="player1" placeholder="Enter Player 1 Name" required>
+            </div>
+            <div class="player player2">
+                <h2>Player 2</h2>
+                <input type="text" name="player2" placeholder="Enter Player 2 Name" required>
+            </div>
+        </div>
+        <button type="submit"><a href = 'cars_race2.html'>Continue</a></button>
+    </form>
+</body>
+</html>
